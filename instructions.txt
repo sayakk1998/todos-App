@@ -1,0 +1,59 @@
+2) .\env\Scripts\activate.ps1
+ps is powershell number terminal
+for activating environment
+
+
+1. virtualenv env --- env is the name of environment. 
+
+
+3. creating a database
+pip install flask-sqlalchemy
+
+in the app.py --> from flask_sqlalchemy import SQLAlchemy
+		  from datetime import datetime [for time in database]	
+
+initialse:- 
+app.config['SQLALCHEMY_DATABASE_URI'] = 
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
+
+class Todo(db.Model):
+    sno = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(200), nullable=False)
+    desc = db.Column(db.String(400), nullable=False)
+    date_created = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def __repr__(self) -> str:
+        return f"{self.sno} - {self.title}"
+
+then,
+---in terminal write "python"
+>>>from app import db
+>>> db.create_all()	[a todo.db file will be created in the folder]
+>>>exit()
+//now go to google and paste this link-- https://inloop.github.io/sqlite-viewer/
+//drag and drop the "todo.db" file into the website
+
+4. Querying records
+def products():
+    allTodo = Todo.query.all()
+    print(allTodo)
+    return "this is products page."
+
+
+
+
+
+
+5. DEPLOYING ON HEROKU STEPS:-
+---install HEROKU CLI
+---VS code terminal >>>pip install gunicorn
+>>>pip freeze > requirements.txt
+
+--- create a file in project folder
+->Procfile -- write in the file web:gunicorn app:app
+uses for del=ploying on HEROKU
+
+
+---write "heroku" on VS CLI after restarting VS CODE
+
